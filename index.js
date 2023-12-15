@@ -58,19 +58,19 @@ app.post('/api/persons/', (request, response) => {
     })
   }
 
+  // 号码缺失
+  if (!body.number) {
+    return response.status(400).json({
+      error: '号码缺失'
+    })
+  }
+
   // 名字重复
   const name = body.name;
   const found = persons.find(person => person.name === name);
   if (found) {
     return response.status(400).json({
       error: '姓名已存在'
-    })
-  }
-
-  // 号码缺失
-  if (!body.number) {
-    return response.status(400).json({
-      error: '号码缺失'
     })
   }
 

@@ -9,3 +9,27 @@ Content-Type: application/json
 ###
 POST http://192.168.2.11:3001/api/persons/ HTTP/1.1
 Content-Type: application/json
+
+### 名称缺失
+POST http://192.168.2.11:3001/api/persons/ HTTP/1.1
+Content-Type: application/json
+
+{
+  "number": "0202"
+}
+
+### 号码缺失
+POST http://192.168.2.11:3001/api/persons/ HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "tits02"
+}
+
+### 名字已存在
+POST http://192.168.2.11:3001/api/persons/ HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Arto Hellas"
+}

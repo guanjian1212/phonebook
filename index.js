@@ -44,6 +44,24 @@ app.delete('/api/persons/:id', (request, response) => {
   response.status(204).end();
 })
 
+app.post('/api/persons/', (request, response) => {
+  const body = request.body;
+
+  if (!body.name) {
+    return response.status(400).json({
+      error: 'content missing'
+    })
+  }
+
+  const newPerson = {
+    ...body,
+    id: Math.floor(Math.random() * 1000000)
+  }
+
+  persons = persons.concat(newPerson);
+  response.json(newPerson);
+})
+
 app.get('/info', (request, response) => {
   response.send(`
     Phonebook has info for ${persons.length} people <br />

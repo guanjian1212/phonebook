@@ -39,6 +39,10 @@ app.get('/api/persons/:id', (request, response) => {
   }
 })
 
+app.delete('/api/persons/:id', (request, response) => {
+  persons = persons.filter(person => person.id !== Number(request.params.id));
+  response.status(204).end();
+})
 
 app.get('/info', (request, response) => {
   response.send(`

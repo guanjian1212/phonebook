@@ -1,5 +1,7 @@
 const express = require('express')
 var morgan = require('morgan')
+const cors = require('cors')
+
 const app = express()
 
 let persons = [
@@ -24,6 +26,8 @@ let persons = [
     "number": "39-23-6423122"
   }
 ]
+
+app.use(cors());
 
 app.use(express.json());
 
@@ -69,6 +73,7 @@ app.post('/api/persons/', (request, response) => {
   const name = body.name;
   const found = persons.find(person => person.name === name);
   if (found) {
+
     return response.status(400).json({
       error: '姓名已存在'
     })
@@ -81,6 +86,32 @@ app.post('/api/persons/', (request, response) => {
 
   persons = persons.concat(newPerson);
   response.json(newPerson);
+})
+
+app.put('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id);
+  const body = request.body;
+
+  // 号码缺失
+  if (!body.number) {
+    return response.status(400).json({
+      error: '号码缺失'
+    })
+  }
+
+  const name = body.name;
+  persons = persons.map(person => {
+    if (person.name !== name) {
+      return person;
+    } else {
+      return {
+        ...person,
+        ...body
+      }
+    }
+  })
+
+  response.status(204).end();
 })
 
 app.get('/info', (request, response) => {
